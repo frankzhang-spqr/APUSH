@@ -120,16 +120,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 const questionElement = document.getElementById(`question-${question.substring(1)}`);
                 
                 if (selected) {
-                    const selectedOptionLabel = document.querySelector(`label[for="${selected.id}"]`);
+                    const selectedOptionLabel = selected.closest('.quiz-option');
                     
                     if (selected.value === correctAnswer) {
                         score++;
-                        selectedOptionLabel.classList.add('correct');
+                        if (selectedOptionLabel) selectedOptionLabel.classList.add('correct');
                     } else {
-                        selectedOptionLabel.classList.add('incorrect');
-                        const correctOption = document.querySelector(`input[name="${question}"][value="${correctAnswer}"]`);
-                        if (correctOption) {
-                            document.querySelector(`label[for="${correctOption.id}"]`).classList.add('correct');
+                        if (selectedOptionLabel) selectedOptionLabel.classList.add('incorrect');
+                        const correctOptionInput = document.querySelector(`input[name="${question}"][value="${correctAnswer}"]`);
+                        if (correctOptionInput) {
+                            const correctOptionLabel = correctOptionInput.closest('.quiz-option');
+                            if (correctOptionLabel) correctOptionLabel.classList.add('correct');
                         }
                     }
                 }

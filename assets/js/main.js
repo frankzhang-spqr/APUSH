@@ -120,16 +120,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 const questionElement = document.getElementById(`question-${question.substring(1)}`);
                 
                 if (selected) {
-                    const selectedOptionLabel = document.querySelector(`label[for="${selected.id}"]`);
+                    const selectedOptionLabel = selected.closest('.quiz-option');
                     
                     if (selected.value === correctAnswer) {
                         score++;
-                        selectedOptionLabel.classList.add('correct');
+                        if (selectedOptionLabel) selectedOptionLabel.classList.add('correct');
                     } else {
-                        selectedOptionLabel.classList.add('incorrect');
-                        const correctOption = document.querySelector(`input[name="${question}"][value="${correctAnswer}"]`);
-                        if (correctOption) {
-                            document.querySelector(`label[for="${correctOption.id}"]`).classList.add('correct');
+                        if (selectedOptionLabel) selectedOptionLabel.classList.add('incorrect');
+                        const correctOptionInput = document.querySelector(`input[name="${question}"][value="${correctAnswer}"]`);
+                        if (correctOptionInput) {
+                            const correctOptionLabel = correctOptionInput.closest('.quiz-option');
+                            if (correctOptionLabel) correctOptionLabel.classList.add('correct');
                         }
                     }
                 }
@@ -168,22 +169,6 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         showQuestion(currentQuestionIndex);
-
-        // Handle clicking on quiz option labels
-        quizForm.querySelectorAll('.quiz-option').forEach(label => {
-            label.addEventListener('click', () => {
-                const radioId = label.getAttribute('for');
-                const radio = document.getElementById(radioId);
-                if (radio) {
-                    radio.checked = true;
-                }
-
-                // Visual feedback for selection
-                const questionDiv = label.closest('.quiz-question');
-                questionDiv.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
-                label.classList.add('selected');
-            });
-        });
     }
 
     // Animate timeline items on scroll

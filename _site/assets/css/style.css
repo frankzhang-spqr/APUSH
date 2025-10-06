@@ -141,7 +141,7 @@ body {
     border-color: var(--bs-primary);
 }
 
-.form-check-input:checked+.quiz-option {
+.form-check-input:checked + .quiz-option {
     background-color: rgba(52, 152, 219, 0.1);
     border-color: var(--bs-primary);
     font-weight: 500;
