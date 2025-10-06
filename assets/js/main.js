@@ -168,6 +168,22 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 
         showQuestion(currentQuestionIndex);
+
+        // Handle clicking on quiz option labels
+        quizForm.querySelectorAll('.quiz-option').forEach(label => {
+            label.addEventListener('click', () => {
+                const radioId = label.getAttribute('for');
+                const radio = document.getElementById(radioId);
+                if (radio) {
+                    radio.checked = true;
+                }
+
+                // Visual feedback for selection
+                const questionDiv = label.closest('.quiz-question');
+                questionDiv.querySelectorAll('.quiz-option').forEach(opt => opt.classList.remove('selected'));
+                label.classList.add('selected');
+            });
+        });
     }
 
     // Animate timeline items on scroll
