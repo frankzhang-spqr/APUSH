@@ -1,0 +1,60 @@
+---
+layout: default
+title: "The Treaty of Paris"
+---
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">The Treaty of Paris</h1>
+        <p class="lead text-muted">Click on an image to view it in a modal.</p>
+    </div>
+
+    <div class="row g-4">
+        {% for i in (1..15) %}
+            {% if i < 10 %}
+                {% assign num = i | prepend: '0' %}
+            {% else %}
+                {% assign num = i %}
+            {% endif %}
+        <div class="col-md-4 col-lg-3">
+            <div class="card h-100 shadow-sm">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#imageModal" data-img-src="{{ '/assets/images/05477_2008_pages-to-jpg-00' | append: num | append: '.jpg' | relative_url }}">
+                    <img src="{{ '/assets/images/05477_2008_pages-to-jpg-00' | append: num | append: '.jpg' | relative_url }}" class="card-img-top" alt="Page {{ i }}">
+                </a>
+                <div class="card-footer text-center">
+                    <small class="text-muted">Page {{ i }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Image Viewer</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+                <img src="" class="img-fluid" id="modalImage" alt="Full-size image">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const imageModal = document.getElementById('imageModal');
+    if (imageModal) {
+        imageModal.addEventListener('show.bs.modal', function (event) {
+            const link = event.relatedTarget;
+            const imgSrc = link.getAttribute('data-img-src');
+            const modalImage = imageModal.querySelector('#modalImage');
+            modalImage.src = imgSrc;
+        });
+    }
+});
+</script>
